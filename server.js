@@ -5,7 +5,7 @@ const fs = require('fs');
 const { stringify } = require('querystring');
 
 const app = express();
-const port = 8001;
+const port = 8000;
 
 app.use(bodyParser.json());
 app.use(cors()); // CORS aktivieren
@@ -51,14 +51,14 @@ app.get('/history', (req, res) => {
     res.json({ texts: texts });
 });
 
-app.get('/last-messages/:count', (req, res) => {
+app.get('/update/:count', (req, res) => {
     const count = parseInt(req.params.count);
     
     // Überprüfe, ob count eine gültige Zahl ist
     if (isNaN(count)) {
         return res.status(400).json({ error: 'Ungültige Anzahl von Nachrichten' });
     }
-
+    messages
     try {
         // Lese die Chat-Historie aus der Datei
         const data = fs.readFileSync("chat.json", 'utf8');

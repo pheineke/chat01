@@ -70,19 +70,23 @@ function update() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
             var newMessages = response.newMessages;
-            
-            newMessages.forEach(function(message) {
-                let time = message.time;
-                let content = message.content;
-                outputDiv.innerHTML += "<p>" + time + " " + content + "</p>";
-                
-                // Update last_msg_id with the latest message ID
-                last_msg_id = Math.max(last_msg_id, message.id);
-            });
+            if (newMessages == null) {
+                return;
+            } else {
+                newMessages.forEach(function(message) {
+                    let time = message.time;
+                    let content = message.content;
+                    outputDiv.innerHTML += "<p>" + time + " " + content + "</p>";
+                    
+                    // Update last_msg_id with the latest message ID
+                    last_msg_id = Math.max(last_msg_id, message.id);
+                });
+            }
         }
     };
     xhr.send();
 }
+//
 
 // Füge diesen Aufruf hinzu, um sicherzustellen, dass die Box auch dann nach unten scrollt, wenn neuer Text hinzugefügt wird
 // Hier wird angenommen, dass du diese Funktion aufrufst, wenn neuer Text hinzugefügt wird
